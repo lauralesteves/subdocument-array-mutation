@@ -1,38 +1,57 @@
 service: subdocument-module-array
 
+package:
+  patterns:
+    - '!.git/**'
+    - '!.idea/**'
+    - '!.vscode/**'
+    - '!.test/**'
+    - '!docs/**'
+    - '!node_modules/serverless-*/**'
+    - '!node_modules/chai/**'
+    - '!node_modules/eslint*/**'
+    - '!node_modules/mocha/**'
+    - '!node_modules/sinon/**'
+    - '!node_modules/uuid/**'
+
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs20.x
   stage: ${opt:stage, 'prod'}
   region: us-east-1
-  timeout: 10 #Default Lambda timeout
-  memorySize: 128 #Default Lambda Memory Size
-  versionFunctions: false # No functions versioning
-  package:
-    excludeDevDependencies: true
-    exclude:
-      - .git/**
-      - .idea/**
-      - .vscode/**
-      - .test/**
-      - docs/**
+  timeout: 10
+  memorySize: 128
+  versionFunctions: false
 
-  environment: #Global Environment variables
-      ${file(./configs/${self:provider.stage}.yml)}
+  environment:
+    ENV: ${env:APP_ENV, 'local'}
+    REGION: ${env:APP_REGION, 'localhost'}
 
-  iamRoleStatements: # Permissions for all of your functions can be set here
-
-  - Effect: Allow
-    Action: # Gives permission to Lambda execution
-      - lambda:InvokeFunction
-      - lambda:InvokeAsync
-    Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - lambda:InvokeFunction
+            - lambda:InvokeAsync
+          Resource: "*"
 
 custom:
   region: ${self:provider.region}
   stage: ${opt:stage, self:provider.stage}
   prefix: ${self:custom.stage}-${self:service}
   config: ${self:custom.prefix}-config
+
+  customDomain:
+    domainName: sda.projetos.lauraesteves.com
+    certificateArn: ${env:ACM_CERTIFICATE_ARN}
+    stage: ${self:provider.stage}
+    basePath: ''
+    createRoute53Record: true
+    createRoute53IPv6Record: true
+    endpointType: edge
+    securityPolicy: tls_1_2
+    autoDomain: true
 
   serverless-offline:
     host: '0.0.0.0'
@@ -42,7 +61,7 @@ custom:
     perType: true
 
 plugins:
-  - serverless-pseudo-parameters
+  - serverless-domain-manager
   - serverless-offline
 
 functions: ${file(serverless-dynamic.js)}

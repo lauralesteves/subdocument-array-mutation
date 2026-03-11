@@ -1,5 +1,9 @@
 # Subdocument Array mutation
 
+## Description
+
+Subdocument Array Mutation is a serverless API that receives a document and a set of mutation instructions, then recursively resolves all nested changes — adds, updates, and removals — across deeply nested subdocument arrays. It outputs the precise, path-indexed operations ready to be applied to a database, removing the complexity of manually tracking array positions and nested paths from client applications.
+
 ## Structure
 
 ```
@@ -18,20 +22,24 @@
 └── test (tests folder)
 ```
 
-## Development environment 
+## Development environment
 
-This boilerplate uses `serverless-local` plugin and some containers and plugins to emulate the AWS Resources
+This project uses `serverless-offline` plugin and some containers and plugins to emulate the AWS Resources.
 
 ```bash
-yarn run dev
+make dev
 ```
 The applications will start on `http://localhost:3000`
 
+#### Running with Docker
+
+```bash
+make docker
+```
+
 ### Dev Plugins
 
-This boilerplate contains following plugins for local development: 
-
-* [serverless-offline](https://github.com/dherault/serverless-offline/issues) - For run API Gateway local and manage plugins 
+* [serverless-offline](https://github.com/dherault/serverless-offline/issues) - For run API Gateway local and manage plugins
 * [serverless-plugin-split-stacks](https://github.com/dougmoscrop/serverless-plugin-split-stacks) - Split Cloudformation Templates
 
 ## Production environment
@@ -39,25 +47,25 @@ This boilerplate contains following plugins for local development:
 ### Deploy full services
 
 ```bash
-serverless deploy -v
+make deploy
 ```
 
-### Deploy a function 
+### Deploy a function
 
 ```bash
-serverless deploy function -f mutation
+make deploy-function FUNCTION=mutate
 ```
 
 ### Get function logs
 
 ```bash
-serverless mutation -f test -t
+make logs FUNCTION=mutate
 ```
 
 ### Clean All
 
 ```bash
-serverless remove
+make remove
 ```
 
 ## Testing
@@ -65,24 +73,24 @@ serverless remove
 ### All Tests
 
 ```bash
-yarn run test
+make test
 ```
 
 ### Unit Tests
 
 ```bash
-yarn run unit-test
+make unit-test
 ```
 
 ### Integration Tests
 
 ```bash
-yarn run integration-test
+make integration-test
 ```
 
 ## TODOs
 
 - [ ] Add Coverage Testing
-- [ ] Add automated build in CircleCI
-- [ ] Add Mongo and test the mutations 
+- [x] Add automated deploy with GitHub Actions
+- [ ] Add Mongo and test the mutations
 - [ ] Set a background lambda and split the request for change in DB and the actual execution (adding an endpoint to see if transaction was completed)
