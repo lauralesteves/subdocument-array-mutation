@@ -10,6 +10,12 @@
                 "iam:GetPolicy",
                 "iam:GetRolePolicy",
                 "iam:PassRole",
+                "iam:CreateRole",
+                "iam:DeleteRole",
+                "iam:DeleteRolePolicy",
+                "iam:PutRolePolicy",
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
                 "iam:ListRoles",
                 "iam:ListUserPolicies",
                 "iam:ListUsers",
@@ -32,6 +38,9 @@
                 "s3:ListAllMyBuckets",
                 "s3:GetBucketLocation",
                 "s3:GetObjectVersion",
+                "s3:PutEncryptionConfiguration",
+                "s3:GetEncryptionConfiguration",
+                "s3:PutBucketPolicy",
                 "dynamodb:DeleteTable",
                 "dynamodb:DescribeTable",
                 "dynamodb:DescribeContinuousBackups",
@@ -53,8 +62,6 @@
                 "dynamodb:DeleteBackup",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
-                "dynamodb:DescribeStream",
-                "dynamodb:ListStreams",
                 "apigateway:GET",
                 "apigateway:DELETE",
                 "apigateway:PATCH",
@@ -78,6 +85,47 @@
                 "cloudformation:*",
                 "logs:*",
                 "events:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "CloudFrontManagement",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateDistribution",
+                "cloudfront:GetDistribution",
+                "cloudfront:GetDistributionConfig",
+                "cloudfront:UpdateDistribution",
+                "cloudfront:DeleteDistribution",
+                "cloudfront:ListDistributions",
+                "cloudfront:TagResource",
+                "cloudfront:UntagResource",
+                "cloudfront:ListTagsForResource"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "Route53Management",
+            "Effect": "Allow",
+            "Action": [
+                "route53:ListHostedZones",
+                "route53:GetHostedZone",
+                "route53:ChangeResourceRecordSets",
+                "route53:ListResourceRecordSets",
+                "route53:GetChange"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ACMCertificateManagement",
+            "Effect": "Allow",
+            "Action": [
+                "acm:RequestCertificate",
+                "acm:DescribeCertificate",
+                "acm:ListCertificates",
+                "acm:DeleteCertificate",
+                "acm:AddTagsToCertificate",
+                "acm:ListTagsForCertificate"
             ],
             "Resource": "*"
         }
