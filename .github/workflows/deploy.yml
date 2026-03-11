@@ -1,6 +1,9 @@
 name: Deploy
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       stage:
@@ -42,7 +45,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - name: Deploy
-        run: make deploy STAGE=${{ inputs.stage }}
+        run: make deploy STAGE=${{ inputs.stage || 'prod' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
