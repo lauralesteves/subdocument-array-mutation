@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "docker": "docker-compose up --force-recreate",
-    "dev": "yarn install; serverless offline start --noPrependStageInUrl --stage local --useSeparateProcesses",
+    "dev": "yarn install; npx serverless offline start --noPrependStageInUrl --stage local --useSeparateProcesses",
     "test": "mocha --recursive test/unit/",
     "unit-test": "mocha --recursive test/unit/",
     "integration-test": "mocha --recursive test/integration/"
@@ -27,6 +27,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.32.0",
     "mocha": "^11.7.5",
+    "serverless": "^3.40.0",
     "serverless-domain-manager": "^7.4.0",
     "serverless-offline": "^14.5.0",
     "serverless-plugin-split-stacks": "^1.14.0",

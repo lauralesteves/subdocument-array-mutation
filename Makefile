@@ -12,13 +12,13 @@ docker:
 STAGE ?= prod
 
 deploy:
-	serverless deploy -v --stage $(STAGE)
+	npx serverless deploy -v --stage $(STAGE)
 
 deploy-function:
-	serverless deploy function -f $(FUNCTION)
+	npx serverless deploy function -f $(FUNCTION)
 
 logs:
-	serverless logs -f $(FUNCTION) -t
+	npx serverless logs -f $(FUNCTION) -t
 
 test:
 	yarn run test
@@ -30,4 +30,4 @@ integration-test:
 	yarn run integration-test
 
 remove:
-	serverless remove
+	npx serverless remove
