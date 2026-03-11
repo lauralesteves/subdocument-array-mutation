@@ -1,5 +1,19 @@
 service: subdocument-module-array
 
+package:
+  patterns:
+    - '!.git/**'
+    - '!.idea/**'
+    - '!.vscode/**'
+    - '!.test/**'
+    - '!docs/**'
+    - '!node_modules/serverless-*/**'
+    - '!node_modules/chai/**'
+    - '!node_modules/eslint*/**'
+    - '!node_modules/mocha/**'
+    - '!node_modules/sinon/**'
+    - '!node_modules/uuid/**'
+
 provider:
   name: aws
   runtime: nodejs20.x
@@ -8,22 +22,10 @@ provider:
   timeout: 10
   memorySize: 128
   versionFunctions: false
-  package:
-    patterns:
-      - '!.git/**'
-      - '!.idea/**'
-      - '!.vscode/**'
-      - '!.test/**'
-      - '!docs/**'
-      - '!node_modules/serverless-*/**'
-      - '!node_modules/chai/**'
-      - '!node_modules/eslint*/**'
-      - '!node_modules/mocha/**'
-      - '!node_modules/sinon/**'
-      - '!node_modules/uuid/**'
 
   environment:
-      ${file(./configs/${self:provider.stage}.yml)}
+    ENV: ${env:APP_ENV, 'local'}
+    REGION: ${env:APP_REGION, 'localhost'}
 
   iam:
     role:
@@ -42,7 +44,7 @@ custom:
 
   customDomain:
     domainName: sda.projetos.lauraesteves.com
-    certificateName: '*.projetos.lauraesteves.com'
+    certificateArn: ${env:ACM_CERTIFICATE_ARN}
     stage: ${self:provider.stage}
     basePath: ''
     createRoute53Record: true
