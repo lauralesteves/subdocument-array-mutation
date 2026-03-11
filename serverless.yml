@@ -42,6 +42,7 @@ custom:
 
   customDomain:
     domainName: sda.projetos.lauraesteves.com
+    certificateName: '*.projetos.lauraesteves.com'
     stage: ${self:provider.stage}
     basePath: ''
     createRoute53Record: true
