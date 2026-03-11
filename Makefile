@@ -9,8 +9,10 @@ dev: install
 docker:
 	docker-compose up
 
+STAGE ?= prod
+
 deploy:
-	serverless deploy -v
+	serverless deploy -v --stage $(STAGE)
 
 deploy-function:
 	serverless deploy function -f $(FUNCTION)
