@@ -28,7 +28,7 @@ paths:
           description: Invalid data
 
 servers:
-  - url: https://sda.guilhermesteves.dev
+  - url: https://sda.projetos.lauraesteves.com
 
 components:
   schemas:
